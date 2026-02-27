@@ -4,7 +4,7 @@ import { View, Text, FlatList, ActivityIndicator, StyleSheet, TextInput } from '
 export default function HadithBookDetailsScreen({ route }) {
   const { bookId } = route.params;
   const [allHadiths, setAllHadiths] = useState([]);
-  const [filteredHadiths, setFilteredHadiths] = useState([]); // Search er por je gulo thakbe
+  const [filteredHadiths, setFilteredHadiths] = useState([]); 
   const [displayHadiths, setDisplayHadiths] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -23,10 +23,9 @@ export default function HadithBookDetailsScreen({ route }) {
       }).catch(err => console.error(err));
   }, [bookId]);
 
-  // Search korar function
   const handleSearch = (text) => {
     setSearchQuery(text);
-    const filtered = allHadiths.filter(h => h.text.includes(text)); // text match korle anbe
+    const filtered = allHadiths.filter(h => h.text.includes(text)); 
     setFilteredHadiths(filtered);
     setPage(1);
     setDisplayHadiths(filtered.slice(0, ITEMS_PER_PAGE));
@@ -39,11 +38,15 @@ export default function HadithBookDetailsScreen({ route }) {
     setPage(nextPage);
   };
 
-  if (loading) return <ActivityIndicator size="large" color="#10b981" style={{ flex: 1 }} />;
+  if (loading) return (
+    <View style={styles.loaderContainer}>
+      <ActivityIndicator size="large" color="#1E88E5" />
+      <Text style={styles.loaderText}>Loading Hadiths...</Text>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
-      {/* Hadith Search Bar */}
       <View style={styles.searchContainer}>
         <TextInput 
           style={styles.searchInput}
@@ -74,11 +77,13 @@ export default function HadithBookDetailsScreen({ route }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f0fdf4' },
-  searchContainer: { padding: 15, backgroundColor: '#10b981' },
+  container: { flex: 1, backgroundColor: '#F5F9FF' },
+  loaderContainer: { flex: 1, backgroundColor: '#F5F9FF', justifyContent: 'center', alignItems: 'center' },
+  loaderText: { marginTop: 15, color: '#1E88E5', fontWeight: 'bold' },
+  searchContainer: { padding: 15, backgroundColor: '#1E88E5' },
   searchInput: { backgroundColor: 'white', padding: 10, borderRadius: 8, fontSize: 16 },
-  card: { backgroundColor: 'white', padding: 20, margin: 10, borderRadius: 10, elevation: 2 },
-  number: { fontSize: 14, fontWeight: 'bold', color: '#10b981', borderBottomWidth: 1, borderColor: '#d1fae5', paddingBottom: 5, marginBottom: 10 },
+  card: { backgroundColor: 'white', padding: 20, margin: 10, borderRadius: 10, elevation: 3, borderWidth: 1, borderColor: '#E1F5FE' },
+  number: { fontSize: 15, fontWeight: 'bold', color: '#1E88E5', borderBottomWidth: 1, borderColor: '#E1F5FE', paddingBottom: 5, marginBottom: 10 },
   text: { fontSize: 16, color: '#374151', lineHeight: 24 },
-  footerText: { textAlign: 'center', padding: 15, color: '#10b981', fontWeight: 'bold' }
+  footerText: { textAlign: 'center', padding: 15, color: '#1E88E5', fontWeight: 'bold' }
 });

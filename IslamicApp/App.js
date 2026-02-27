@@ -1,4 +1,5 @@
 import React from 'react';
+import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -10,16 +11,17 @@ import HadithBookDetailsScreen from './screens/HadithBookDetailsScreen';
 import DuaScreen from './screens/DuaScreen';
 import SearchScreen from './screens/SearchScreen';
 import TasbeehScreen from './screens/TasbeehScreen';
-import PrayerTimesScreen from './screens/PrayerTimesScreen'; // Notun
-import QiblaScreen from './screens/QiblaScreen'; // Notun
+import PrayerTimesScreen from './screens/PrayerTimesScreen';
+import QiblaScreen from './screens/QiblaScreen';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#10b981' }, headerTintColor: '#fff' }}>
-        <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Deen - Islamic App' }} />
+      <StatusBar style="light" backgroundColor="#1565C0" />
+      <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#1E88E5' }, headerTintColor: '#fff', headerTitleStyle: { fontWeight: 'bold' } }}>
+        <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Deen - Al Islam' }} />
         <Stack.Screen name="Search" component={SearchScreen} options={{ title: 'Search in Quran' }} />
         <Stack.Screen name="Quran" component={QuranScreen} options={{ title: 'Al Quran' }} />
         <Stack.Screen name="SurahDetails" component={SurahDetailsScreen} options={({ route }) => ({ title: route.params.surahName })} />

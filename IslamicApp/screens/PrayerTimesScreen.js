@@ -9,7 +9,6 @@ export default function PrayerTimesScreen() {
 
   useEffect(() => {
     (async () => {
-      // Location permission chacchi
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied');
@@ -20,7 +19,6 @@ export default function PrayerTimesScreen() {
       let location = await Location.getCurrentPositionAsync({});
       const { latitude, longitude } = location.coords;
 
-      // API theke ajker namazer shomoy anchi
       fetch(`https://api.aladhan.com/v1/timings?latitude=${latitude}&longitude=${longitude}&method=1`)
         .then(res => res.json())
         .then(data => {
@@ -34,7 +32,13 @@ export default function PrayerTimesScreen() {
     })();
   }, []);
 
-  if (loading) return <ActivityIndicator size="large" color="#10b981" style={{ flex: 1 }} />;
+  if (loading) return (
+    <View style={styles.loaderContainer}>
+      <ActivityIndicator size="large" color="#1E88E5" />
+      <Text style={styles.loaderText}>Loading Prayer Times...</Text>
+    </View>
+  );
+  
   if (errorMsg) return <View style={styles.container}><Text style={styles.error}>{errorMsg}</Text></View>;
 
   const prayers = [
@@ -62,11 +66,13 @@ export default function PrayerTimesScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f0fdf4', padding: 20 },
-  title: { fontSize: 24, fontWeight: 'bold', color: '#065f46', textAlign: 'center' },
-  subtitle: { fontSize: 14, color: '#047857', textAlign: 'center', marginBottom: 20 },
-  card: { flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#10b981', padding: 20, borderRadius: 10, marginBottom: 15, elevation: 2 },
+  container: { flex: 1, backgroundColor: '#F5F9FF', padding: 20 },
+  loaderContainer: { flex: 1, backgroundColor: '#F5F9FF', justifyContent: 'center', alignItems: 'center' },
+  loaderText: { marginTop: 15, color: '#1E88E5', fontWeight: 'bold' },
+  title: { fontSize: 24, fontWeight: 'bold', color: '#0D47A1', textAlign: 'center' },
+  subtitle: { fontSize: 14, color: '#1565C0', textAlign: 'center', marginBottom: 20 },
+  card: { flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#1E88E5', padding: 20, borderRadius: 10, marginBottom: 15, elevation: 2 },
   prayerName: { color: 'white', fontSize: 18, fontWeight: 'bold' },
-  prayerTime: { color: '#d1fae5', fontSize: 18, fontWeight: 'bold' },
-  error: { fontSize: 16, color: 'red', textAlign: 'center', marginTop: 50 }
+  prayerTime: { color: '#BBDEFB', fontSize: 18, fontWeight: 'bold' },
+  error: { fontSize: 16, color: '#D32F2F', textAlign: 'center', marginTop: 50 }
 });
