@@ -1,29 +1,43 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 
 export default function HomeScreen({ navigation }) {
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Bismillahir Rahmanir Raheem</Text>
       
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Quran')}>
-        <Text style={styles.buttonText}>📖 Al Quran</Text>
-      </TouchableOpacity>
+      <View style={styles.grid}>
+        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Quran')}>
+          <Text style={styles.icon}>📖</Text>
+          <Text style={styles.cardText}>Al Quran</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Hadith')}>
-        <Text style={styles.buttonText}>📜 Daily Hadith</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Hadith')}>
+          <Text style={styles.icon}>📜</Text>
+          <Text style={styles.cardText}>Hadith</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Dua')}>
-        <Text style={styles.buttonText}>🤲 Daily Duas</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Dua')}>
+          <Text style={styles.icon}>🤲</Text>
+          <Text style={styles.cardText}>Duas</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Tasbeeh')}>
+          <Text style={styles.icon}>📿</Text>
+          <Text style={styles.cardText}>Tasbeeh</Text>
+        </TouchableOpacity>
+        
+        {/* Namaz o Qibla er button amra next dhape add korbo */}
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: '#f0fdf4', justifyContent: 'center' },
+  container: { flexGrow: 1, padding: 20, backgroundColor: '#f0fdf4', justifyContent: 'center' },
   title: { fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginBottom: 30, color: '#065f46' },
-  button: { backgroundColor: '#10b981', padding: 20, borderRadius: 10, marginBottom: 15, alignItems: 'center' },
-  buttonText: { color: 'white', fontSize: 18, fontWeight: 'bold' }
+  grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' },
+  card: { backgroundColor: '#10b981', width: '48%', padding: 25, borderRadius: 15, marginBottom: 15, alignItems: 'center', elevation: 3 },
+  icon: { fontSize: 35, marginBottom: 10 },
+  cardText: { color: 'white', fontSize: 16, fontWeight: 'bold' }
 });
