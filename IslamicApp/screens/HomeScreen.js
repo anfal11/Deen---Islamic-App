@@ -19,15 +19,23 @@ export default function HomeScreen({ navigation }) {
 
         <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Dua')}>
           <Text style={styles.icon}>🤲</Text>
-          <Text style={styles.cardText}>Duas</Text>
+          <Text style={styles.cardText}>Daily Duas</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Tasbeeh')}>
           <Text style={styles.icon}>📿</Text>
           <Text style={styles.cardText}>Tasbeeh</Text>
         </TouchableOpacity>
-        
-        {/* Namaz o Qibla er button amra next dhape add korbo */}
+
+        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('PrayerTimes')}>
+          <Text style={styles.icon}>🕌</Text>
+          <Text style={styles.cardText}>Prayer Times</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Qibla')}>
+          <Text style={styles.icon}>🧭</Text>
+          <Text style={styles.cardText}>Qibla Compass</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );

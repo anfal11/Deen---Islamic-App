@@ -1,33 +1,50 @@
-import React from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, ScrollView, StyleSheet, TextInput } from 'react-native';
+// JSON file ta import korchi
+import duasData from './duas.json'; 
 
 export default function DuaScreen() {
-  const duas = [
-    { id: 1, title: "Waking Up", arabic: "الْحَمْدُ للهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ", meaning: "All praise is for Allah who gave us life after having taken it from us and unto Him is the resurrection." },
-    { id: 2, title: "Before Eating", arabic: "بِسْمِ اللَّهِ وَبَرَكَةِ اللَّهِ", meaning: "In the name of Allah and with the blessings of Allah I begin (eating)." },
-    { id: 3, title: "For Forgiveness", arabic: "رَبَّنَا ظَلَمْنَا أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ", meaning: "Our Lord, we have wronged ourselves, and if You do not forgive us and have mercy upon us, we will surely be among the losers." },
-    { id: 4, title: "For Knowledge", arabic: "رَبِّ زِدْنِي عِلْمًا", meaning: "O my Lord, increase me in knowledge." },
-    { id: 5, title: "Leaving the House", arabic: "بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ", meaning: "In the name of Allah, I place my trust in Allah, and there is no might nor power except with Allah." },
-    { id: 6, title: "For Parents", arabic: "رَّبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا", meaning: "My Lord, have mercy upon them as they brought me up [when I was] small." }
-  ];
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Search filter
+  const filteredDuas = duasData.filter(d => 
+    d.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    d.meaning.includes(searchQuery)
+  );
 
   return (
-    <ScrollView style={styles.container}>
-      {duas.map((d) => (
-        <View key={d.id} style={styles.card}>
-          <Text style={styles.title}>{d.title}</Text>
-          <Text style={styles.arabic}>{d.arabic}</Text>
-          <Text style={styles.meaning}>{d.meaning}</Text>
-        </View>
-      ))}
-    </ScrollView>
+    <View style={styles.container}>
+      <Text style={styles.headerTitle}>Total Duas: {duasData.length}</Text>
+      
+      <TextInput 
+        style={styles.searchInput}
+        placeholder="Search Dua (e.g. ঘুমানোর, ওজু)..."
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+      />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {filteredDuas.map((d) => (
+          <View key={d.id} style={styles.card}>
+            <Text style={styles.title}>{d.id}. {d.title}</Text>
+            <Text style={styles.arabic}>{d.arabic}</Text>
+            <Text style={styles.meaning}>{d.meaning}</Text>
+          </View>
+        ))}
+        {filteredDuas.length === 0 && (
+          <Text style={styles.noResult}>No Duas found!</Text>
+        )}
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#f0fdf4', padding: 15 },
+  headerTitle: { fontSize: 16, fontWeight: 'bold', color: '#10b981', textAlign: 'center', marginBottom: 10 },
+  searchInput: { backgroundColor: 'white', padding: 12, borderRadius: 8, fontSize: 16, borderWidth: 1, borderColor: '#10b981', marginBottom: 15 },
   card: { backgroundColor: 'white', padding: 20, borderRadius: 10, marginBottom: 15, elevation: 3 },
   title: { fontSize: 16, fontWeight: 'bold', color: '#047857', borderBottomWidth: 1, borderColor: '#d1fae5', paddingBottom: 5 },
-  arabic: { fontSize: 26, textAlign: 'center', marginVertical: 15, color: '#065f46', lineHeight: 40 },
-  meaning: { fontSize: 15, fontStyle: 'italic', color: '#4b5563', textAlign: 'center' }
+  arabic: { fontSize: 24, textAlign: 'right', marginVertical: 15, color: '#065f46', lineHeight: 40 },
+  meaning: { fontSize: 15, fontWeight: 'bold', color: '#374151', textAlign: 'justify' },
+  noResult: { textAlign: 'center', color: 'red', marginTop: 20, fontSize: 16 }
 });

@@ -9,7 +9,9 @@ import HadithScreen from './screens/HadithScreen';
 import HadithBookDetailsScreen from './screens/HadithBookDetailsScreen';
 import DuaScreen from './screens/DuaScreen';
 import SearchScreen from './screens/SearchScreen';
-import TasbeehScreen from './screens/TasbeehScreen'; // Notun Screen
+import TasbeehScreen from './screens/TasbeehScreen';
+import PrayerTimesScreen from './screens/PrayerTimesScreen'; // Notun
+import QiblaScreen from './screens/QiblaScreen'; // Notun
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +27,8 @@ export default function App() {
         <Stack.Screen name="HadithBookDetails" component={HadithBookDetailsScreen} options={({ route }) => ({ title: route.params.bookTitle })} />
         <Stack.Screen name="Dua" component={DuaScreen} options={{ title: 'Daily Duas' }} />
         <Stack.Screen name="Tasbeeh" component={TasbeehScreen} options={{ title: 'Tasbeeh Counter' }} />
+        <Stack.Screen name="PrayerTimes" component={PrayerTimesScreen} options={{ title: 'Prayer Times' }} />
+        <Stack.Screen name="Qibla" component={QiblaScreen} options={{ title: 'Qibla Compass' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
